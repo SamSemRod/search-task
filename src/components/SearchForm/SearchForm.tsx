@@ -5,6 +5,7 @@ import "./styles.css";
 export default function SearchForm () {
   const [input, setInput] = useState('');
   const { setUsers } = useUsers();
+   
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -12,9 +13,15 @@ export default function SearchForm () {
         setUsers([]);
         return;
       }
-      const response = await fetch(`https://dummyjson.com/users/search?q=${input}`);
-      const data = await response.json();
-      setUsers(data.users);
+      try {
+        const response = await fetch(`https://dummyjson.com/users/search?q=${input}`);
+        if (!response.ok) throw new Error('Server responce error');
+        const data = await response.json();
+        setUsers(data.users);
+      } catch {
+        setUsers([]);
+        console.error('Search error')
+      }
     };
 
     const timerId = setTimeout(() => {
