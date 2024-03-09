@@ -1,12 +1,14 @@
+import { User } from '../SearchResults/SearchContext';
+
 import "./style.css";
 
-export function UserCard(props) {
+export default function UserCard({user} : {user: User}) {
   return (
-    <div className="userCard">
-      <img className="userPic" src={props.image} />
+    <div key={1} className="userCard" >
+      <img className="userPic" src={user.image} />
       <div className="userInfo">
-        <div>{`${props.firstName} ${props.lastName}`}</div>
-        <div>{props.address.city}</div>
+        <div>{`${user.firstName} ${user.lastName}`}</div>
+        <div>{user.address.city}</div>
       </div>
     </div>
   );
